@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>STU Accounting App</title>
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+    <link rel='stylesheet' href="{% static 'css/bootstrap.min.css' %}" type="text/css"/>
+</head>
+
+<body class="body" style="background-color:#f6f6f6">
+    <div class="row">
+        <div class="col-md-4">Accounting</div>
+        <div class="col-md-4">Customers</div>
+        <div class="col-md-4">Something</div>
+    </div>
+    <div>
+       {% block content %}
+       {% endblock %}
+    </div>
+</body>
+
+</html>
