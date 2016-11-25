@@ -1,0 +1,19 @@
+{% extends "webapp/header.html" %}
+
+{% block content %}
+    <h2>{{customer.name}}</h2>
+    <h4 class="oe_mt16" style="font-style: italic">
+        <strong>Email: </strong>
+        {{customer.email}}
+    </h4>
+    <h3 class="oe_mt16">
+        <strong>Registration Number: </strong>
+        {{customer.reg_number}}
+    </h3>
+    <h3 class="oe_mt16">
+        <strong>VAT Number: </strong>
+        {{customer.vat_number}}
+    </h3>
+    <h5><strong>Comments: </strong></h5>
+    <p>{{customer.coment}}</p>
+{% endblock %}

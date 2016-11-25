@@ -1,0 +1,22 @@
+{% extends "webapp/header.html" %}
+
+{% block content %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <th>Name</th>
+            <th>Reg number</th>
+            <th>Vat number</th>
+            <th>Email</th>
+        </thead>
+        <tbody>
+    {% for customer in object_list %}
+        <tr>
+            <td><a href="/customers/{{customer.id}}">{{customer.name}}</a></td>
+            <td>{{customer.reg_number}}</td>
+            <td>{{customer.vat_number}}</td>
+            <td>{{customer.email}}</td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

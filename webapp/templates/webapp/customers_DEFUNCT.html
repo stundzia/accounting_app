@@ -1,0 +1,51 @@
+{% extends "webapp/header.html" %}
+{% block content %}
+<div>
+    <em>Customers list</em>
+</div>
+<p>
+    {% if thead %}
+    <th colspan="2">{{thead}}</th>
+    {% endif %}
+</p>
+<table class="table table-striped">
+    {% if tfoot %}
+    <tfoot>
+        <tr>
+            <td colspan="2">{{tfoot}}</td>
+        </tr>
+    </tfoot>
+    {% endif %}
+    <thead>
+        {% if thead %}
+            <tr>
+                <th colspan="2">{{thead}} </th>
+            </tr>
+        {% endif %}
+        <th>ID</th><th>Name</th>
+    </thead>
+    <tbody>
+        {% for rec in recs %}
+        <tr>
+            <td>{{rec}}</td>
+            <td>{{rec}}</td>
+            <!--<td>rec['name']</td>-->
+            <!--TODO: the above does not work, figure out how to properly access dict items-->
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>1</td>
+            <td>Ted</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Paul</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Larry</td>
+        </tr>
+    </tbody>
+</table>
+{% include "webapp/includes/footer.html" %}
+{% endblock %}
