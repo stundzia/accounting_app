@@ -2,6 +2,9 @@
 
 {% block content %}
     <h2>{{invoicecustomer.number}}</h2>
-    <h4>Customer: {{invoicecustomer.customer_id.name}}</h4>
+
     <h4 class="col-xs-offset-3 col-xs-6 text-center">[UNDER CONSTRUCTION]</h4>
+    <form action="/planner/post" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    </form>
 {% endblock %}

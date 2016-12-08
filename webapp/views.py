@@ -1,10 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
-
+from django.template import RequestContext
+from webapp.forms import InvoiceCustomerForm
 
 def index(request):
     # return HttpResponse("<h1>Welcome!</h1>")
     return render(request, 'webapp/home.html')
+
+def invoice_customer_create(request):
+    form = InvoiceCustomerForm()
+    return render_to_response('invoice_create_form.html',
+                              {'form': form, },
+                              context_instance=RequestContext(request),
+            )
 
 def customers(request):
     recs = [

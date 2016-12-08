@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.views.generic import ListView, DetailView
-from webapp.models import Customer, InvoiceCustomer
+from django.forms import ModelForm
+from webapp.models import Customer, InvoiceCustomer, Product, InvoiceLine
 from . import views
 
 urlpatterns = [
@@ -30,5 +31,12 @@ urlpatterns = [
         DetailView.as_view(
             model=Customer,
             template_name="webapp/customer.html")
+    ),
+    url(
+        r'^products/list$',
+        ListView.as_view(
+            queryset=Product.objects.all().order_by("number")[:50],
+            template_name="webapp/products.html"
+        )
     ),
 ]

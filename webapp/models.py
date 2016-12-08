@@ -18,9 +18,17 @@ class InvoiceCustomer(models.Model):
     number = models.CharField(max_length=30)
     amount_total = models.IntegerField()
     comment = models.TextField()
+    customer_id = models.ForeignKey('Customer', default=1, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.number
+
+class InvoiceLine(models.Model):
+    quantity = models.IntegerField()
+    amount = models.FloatField()
+    description = models.CharField(max_length=40)
+    invoice_id = models.ForeignKey('InvoiceCustomer', default=1, on_delete=models.CASCADE)
+    product_id = models.ForeignKey('Product', blank=True, default=False, on_delete=models.CASCADE)
 
 class Product(models.Model):
     types = [

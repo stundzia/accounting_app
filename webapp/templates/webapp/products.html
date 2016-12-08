@@ -5,13 +5,14 @@
     <table class="table table-striped table-bordered">
         <thead>
             <th>Number</th>
-            <th>Total Amount</th>
+            <th>Description</th>
         </thead>
         <tbody>
-    {% for invoice in object_list %}
+    {% for product in object_list %}
         <tr>
-            <td><a href="/invoices/{{invoice.id}}">{{invoice.number}}</a></td>
-            <td>{{invoice.amount_total}}</td>
+            <td>{{product.number}}</td>
+            <td><a href="/products/{{product.id}}">{{product.name}}</a></td>
+            <td>{{product.description}}</td>
         </tr>
     {% endfor %}
         </tbody>
