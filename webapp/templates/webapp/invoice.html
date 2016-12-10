@@ -5,17 +5,20 @@
     <h4>Partner: {{invoice.partner_id.name}}</h4>
     <h4>Currency: {{invoice.currency_id}}</h4>
     <h4>Subtotal: {{invoice.subtotal}}</h4>
+    <h4>Tax Amount: {{invoice.tax_amount}}</h4>
+    <h4>Total: {{invoice.total}}</h4>
     <!--<h4 class="col-xs-offset-3 col-xs-6 text-center">[UNDER CONSTRUCTION]</h4>-->
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th colspan="4">Invoice Lines</th>
+                <th colspan="5">Invoice Lines</th>
             </tr>
             <tr>
                 <th>Product</th>
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Amount</th>
+                <th>Tax Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -26,11 +29,12 @@
                 <td>{{line.description}}</td>
                 <td>{{line.quantity}}</td>
                 <td>{{line.subtotal}}</td>
+                <td>{{line.tax_amount}}</td>
             </tr>
             {% endfor %}
         {% else %}
             <tr>
-                <td colspan="4">No invoice lines.</td>
+                <td colspan="5">No invoice lines.</td>
             </tr>
         {% endif %}
         </tbody>

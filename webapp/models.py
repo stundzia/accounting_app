@@ -4,8 +4,20 @@ from django.db import models
 from django.utils import timezone
 
 # DEFAULTS
+
+
 def get_default_invoice_comment():
     return "Enter comment here..."
+
+
+# TODO: figure out a way to do this, since can only put default get here, but
+# can't call Tax class before it's definition
+# def get_default_tax():
+#     try:
+#         return Tax.objects.get(name='None')
+#     except Tax.DoesNotExist:
+#         return False
+
 
 class Partner(models.Model):
     name = models.CharField(max_length=70)
@@ -46,11 +58,22 @@ class Invoice(models.Model):
         'Currency', default=1, on_delete=models.CASCADE)
 
     @property
+    def tax_amount(self):
+        total = 0
+        for line in self.invoiceline_set.all():
+            total += line.tax_amount
+        return total
+
+    @property
     def subtotal(self):
         total = 0.0
         for line in self.invoiceline_set.all():
             total += line.amount
         return total
+
+    @property
+    def total(self):
+        return self.subtotal + self.tax_amount
 
     def __unicode__(self):
         return self.number
@@ -63,6 +86,8 @@ class InvoiceLine(models.Model):
         'Invoice', default=1, on_delete=models.CASCADE)
     product_id = models.ForeignKey(
         'Product', blank=True, default=False, on_delete=models.CASCADE)
+    tax_id = models.ForeignKey(
+        'Tax', blank=True, on_delete=models.CASCADE)
 
     @property
     def unit_price(self):
@@ -74,6 +99,17 @@ class InvoiceLine(models.Model):
     @property
     def subtotal(self):
         return self.unit_price * self.quantity
+
+    @property
+    def tax_amount(self):
+        tax = self.tax_id
+        if tax:
+            if tax.type == 'percent':
+                return self.subtotal * tax.rate
+            elif tax.type == 'flat':
+                return tax.rate
+        else:
+            return 0.0
 
     def __unicode__(self):
         return "%s %s X %s" % (
@@ -93,3 +129,18 @@ class Product(models.Model):
 
     def __unicode__(self):
         return "[%s] %s" % (self.internal_reference, self.name)
+
+
+class Tax(models.Model):
+    types = [
+        ('flat', 'Flat Rate'),
+        ('percent', 'Percentage')
+    ]
+
+    name = models.CharField(max_length=20)
+    type = models.CharField(max_length=10, choices=types, default='percent')
+    code = models.CharField(max_length=3)
+    rate = models.FloatField(default=0.0)
+
+    def __unicode__(self):
+        return "[%s] %s" % (self.code, self.name)

@@ -14,16 +14,16 @@
         <div class="container-fluid">
             <div class="row mt16 header-div">
                 <div class="col-md-3 text-center">
-                    <a href="/invoices/list">Invoices</a>
+                    <a href="{% url 'invoice_list' %}">Invoices</a>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="/customers/list">Customers</a>
+                    <a href="{% url 'customer_list' %}">Customers</a>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="/suppliers/list">Suppliers</a>
+                    <a href="{% url 'supplier_list' %}">Suppliers</a>
                 </div>
                 <div class="col-md-3 text-center">
-                    <a href="/products/list">Products</a>
+                    <a href="{% url 'product_list' %}">Products</a>
                 </div>
             </div>
             <div>
