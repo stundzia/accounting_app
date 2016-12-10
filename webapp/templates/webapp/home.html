@@ -3,6 +3,38 @@
 <div class="col-xs-offset-3 text-center col-xs-6">
     <h1><em>The very much incomplete accounting app</em></h1>
 </div>
+<div class="oe_mt48 col-xs-offset-3 col-xs-6">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="5" class="text-center">Latest Invoices</th>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <th>Number</th>
+                <th>Invoice Date</th>
+                <th>Partner</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if invoices %}
+            {% for invoice in invoices %}
+                <tr>
+                    <td>{{invoice.type}}</td>
+                    <td>{{invoice.number}}</td>
+                    <td>{{invoice.date_invoice}}</td>
+                    <td>{{invoice.partner_id.name}}</td>
+                    <td>{{invoice.amount}}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">No Invoices Found</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
 
-{% include "webapp/includes/footer.html" %}
 {% endblock %}

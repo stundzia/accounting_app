@@ -1,11 +1,19 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, get_object_or_404, get_list_or_404
 from django.http import HttpResponse
 from django.template import RequestContext
 from webapp.forms import InvoiceForm
+from .models import Invoice, Partner, Product
 
 def index(request):
-    # return HttpResponse("<h1>Welcome!</h1>")
-    return render(request, 'webapp/home.html')
+    latest_invoices = Invoice.objects.order_by('-date_invoice')[:10]
+    context = {
+        'invoices': latest_invoices,
+    }
+    return render(request, 'webapp/home.html', context)
+
+# def suppliers(request):
+#     suppliers = get_list_or_404(Partner, supplier=True)
+#     return render(request, 'webapp/partner_list.html', {'suppliers': suppliers})
 
 def invoice_create(request):
     form = InvoiceForm()

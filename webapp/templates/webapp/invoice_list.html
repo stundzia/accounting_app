@@ -11,7 +11,7 @@
     {% for invoice in object_list %}
         <tr>
             <td><a href="/invoices/{{invoice.id}}">{{invoice.number}}</a></td>
-            <td>{{invoice.amount_total}}</td>
+            <td>{{invoice.subtotal}}</td>
         </tr>
     {% endfor %}
         </tbody>
