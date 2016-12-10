@@ -9,12 +9,12 @@
             <th>Email</th>
         </thead>
         <tbody>
-    {% for customer in object_list %}
+    {% for partner in object_list %}
         <tr>
-            <td><a href="/customers/{{customer.id}}">{{customer.name}}</a></td>
-            <td>{{customer.reg_number}}</td>
-            <td>{{customer.vat_number}}</td>
-            <td>{{customer.email}}</td>
+            <td><a href="/partners/{{partner.id}}">{{partner.name}}</a></td>
+            <td>{{partner.reg_number}}</td>
+            <td>{{partner.vat_number}}</td>
+            <td>{{partner.email}}</td>
         </tr>
     {% endfor %}
         </tbody>
