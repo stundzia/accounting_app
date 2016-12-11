@@ -51,12 +51,16 @@ class Address(models.Model):
     email = models.EmailField(blank=True)
 
     def __unicode__(self):
-         return "%s [%s] %s" % self.partner_id.name, self.type, self.name
+         return "%s [%s] %s" % (
+             self.partner_id.name or None, self.type or None, self.name or None)
+
 
 class Currency(models.Model):
     name = models.CharField(max_length=20)
     code = models.CharField(max_length=3)
 
+    def __unicode__(self):
+        return self.code
 
 class Company(Partner):
     employee_count = models.IntegerField(default=1)
