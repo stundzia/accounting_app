@@ -33,6 +33,26 @@ class Partner(models.Model):
         return self.name
 
 
+class Address(models.Model):
+    types = [
+        ('contact', 'Contact'),
+        ('invoice', 'Invoice'),
+        ('shipping', 'Shipping'),
+    ]
+    partner_id = models.ForeignKey('Partner', on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    type = models.CharField('Address Type', max_length=10, choices=types)
+    street = models.CharField('Street', blank=True, max_length=40)
+    city = models.CharField('City', blank=True, max_length=30)
+    zip = models.CharField('Zip', blank=True, max_length=15)
+    country = models.CharField('Country', blank=True, max_length=30)
+    phone = models.CharField('Phone', blank=True, max_length=20)
+    fax = models.CharField('Fax', blank=True, max_length=20)
+    email = models.EmailField(blank=True)
+
+    def __unicode__(self):
+         return "%s [%s] %s" % self.partner_id.name, self.type, self.name
+
 class Currency(models.Model):
     name = models.CharField(max_length=20)
     code = models.CharField(max_length=3)

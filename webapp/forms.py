@@ -7,7 +7,7 @@ class InvoiceForm(ModelForm):
 
     class Meta:
         model = Invoice
-        fields = ['number', "partner_id", 'comment']
+        fields = ['number', 'partner_id', 'comment']
 
 class PartnerForm(ModelForm):
     created_at = forms.DateTimeField()

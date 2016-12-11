@@ -1,7 +1,8 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, get_list_or_404
 from django.http import HttpResponse
 from django.template import RequestContext
-from webapp.forms import InvoiceForm
+from .forms import InvoiceForm
+from django.views import generic
 from .models import Invoice, Partner, Product
 
 def index(request):
@@ -15,12 +16,17 @@ def index(request):
 #     suppliers = get_list_or_404(Partner, supplier=True)
 #     return render(request, 'webapp/partner_list.html', {'suppliers': suppliers})
 
-def invoice_create(request):
-    form = InvoiceForm()
-    return render_to_response('invoice_create_form.html',
-                              {'form': form, },
-                              context_instance=RequestContext(request),
-            )
+# def invoice_create(request, pk):
+#     form = InvoiceForm()
+#     return render_to_response('invoice_create_form.html',
+#                               {'form': InvoiceForm, },
+#                               context_instance=RequestContext(request),
+#             )
+
+class InvoiceCreateForm(generic.FormView):
+    form_class = InvoiceForm
+    template_name = 'webapp/invoice_create_form.html'
+
 
 def customers(request):
     recs = [
