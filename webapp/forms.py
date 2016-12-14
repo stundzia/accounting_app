@@ -1,13 +1,22 @@
 from django import forms
 from django.forms import ModelForm
-from webapp.models import Invoice, Product, Partner
+from django.forms.models import inlineformset_factory
+from .models import Invoice, Product, Partner, InvoiceLine
+
+InvoiceLineFormSet = inlineformset_factory(
+    Invoice, InvoiceLine, can_delete=True, fields=[
+        'product_id', 'quantity', 'description'], exclude=[
+        'created_at'
+    ])
+
+
 
 class InvoiceForm(ModelForm):
     created_at = forms.DateTimeField()
 
     class Meta:
         model = Invoice
-        fields = ['number', 'partner_id', 'comment']
+        fields = ['number', 'partner_id', 'comment', 'currency_id']
 
 class PartnerForm(ModelForm):
     created_at = forms.DateTimeField()

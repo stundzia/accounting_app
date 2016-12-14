@@ -92,7 +92,7 @@ class Invoice(models.Model):
     def subtotal(self):
         total = 0.0
         for line in self.invoiceline_set.all():
-            total += line.amount
+            total += line.subtotal
         return total
 
     @property
@@ -104,14 +104,14 @@ class Invoice(models.Model):
 
 class InvoiceLine(models.Model):
     quantity = models.IntegerField(default=1)
-    amount = models.FloatField()
-    description = models.CharField(max_length=40)
+    description = models.CharField(max_length=40, blank=True, null=True)
     invoice_id = models.ForeignKey(
         'Invoice', default=1, on_delete=models.CASCADE)
     product_id = models.ForeignKey(
-        'Product', blank=True, default=False, on_delete=models.CASCADE)
+        'Product', blank=True, null=True,
+        default=False, on_delete=models.CASCADE)
     tax_id = models.ForeignKey(
-        'Tax', blank=True, on_delete=models.CASCADE)
+        'Tax', blank=True, null=True, on_delete=models.CASCADE)
 
     @property
     def unit_price(self):

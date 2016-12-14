@@ -7,6 +7,7 @@
             <th>Internal Reference</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Unit Price</th>
         </thead>
         <tbody>
     {% for product in object_list %}
@@ -14,6 +15,7 @@
             <td>{{product.internal_reference}}</td>
             <td><a href="/products/{{product.id}}">{{product.name}}</a></td>
             <td>{{product.description}}</td>
+            <td>{{product.unit_price}}</td>
         </tr>
     {% endfor %}
         </tbody>

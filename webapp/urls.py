@@ -7,10 +7,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(
-        r'^invoices_form/(?P<pk>\d+)$',
-        views.InvoiceCreateForm.as_view(),
-        name='invoice_create_form'),
-    url(
         r'^customers/list$',
         ListView.as_view(
             queryset=Partner.objects.filter(customer=True).order_by("name")[:50],
@@ -59,5 +55,9 @@ urlpatterns = [
             model=Product,
             template_name="webapp/product.html"
         ), name='product_detail'
+    ),
+    url(
+        r'^invoices_form/new/post$',
+        views.submit_invoice, name='submit_invoice'
     ),
 ]

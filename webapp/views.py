@@ -1,9 +1,11 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, get_list_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, request, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from .forms import InvoiceForm
+from .forms import InvoiceForm, InvoiceLineFormSet
 from django.views import generic
 from .models import Invoice, Partner, Product
+
 
 def index(request):
     latest_invoices = Invoice.objects.order_by('-date_invoice')[:10]
@@ -12,36 +14,24 @@ def index(request):
     }
     return render(request, 'webapp/home.html', context)
 
-# def suppliers(request):
-#     suppliers = get_list_or_404(Partner, supplier=True)
-#     return render(request, 'webapp/partner_list.html', {'suppliers': suppliers})
 
-# def invoice_create(request, pk):
-#     form = InvoiceForm()
-#     return render_to_response('invoice_create_form.html',
-#                               {'form': InvoiceForm, },
-#                               context_instance=RequestContext(request),
-#             )
-
-class InvoiceCreateForm(generic.FormView):
-    form_class = InvoiceForm
-    template_name = 'webapp/invoice_create_form.html'
-
-
-def customers(request):
-    recs = [
-        {
-            'name': 'John',
-            'id': 1,
-        },
-        {
-            'name': 'Tom',
-            'id': 2,
-        }
-    ]
-    vals = {
-        'thead': 'Customers',
-        'tfoot': 'Table Footer',
-        'recs': recs,
-    }
-    return render(request, 'webapp/customers.html', vals)
+def submit_invoice(request):
+    if request.POST:
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+            invoice = form.save(commit=False)
+            invoiceline_formset = InvoiceLineFormSet(request.POST, instance=invoice)
+            if invoiceline_formset.is_valid():
+                invoice.save()
+                invoiceline_formset.save()
+                return HttpResponseRedirect(reverse('invoice_list'))
+    else:
+        form = InvoiceForm()
+        invoiceline_formset = InvoiceLineFormSet(instance=Invoice())
+    return render_to_response("webapp/invoice_submit.html", {
+        "form": form,
+        "invoiceline_formset": invoiceline_formset,
+    },
+                              # context_instance=RequestContext(request)
+                              # TODO: ^unexpected kwarg
+                              )

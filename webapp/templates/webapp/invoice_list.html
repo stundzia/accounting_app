@@ -1,7 +1,9 @@
 {% extends "webapp/header.html" %}
 
 {% block content %}
-    <button class="text-center btn btn-danger">Create</button>
+    <a href="{% url 'submit_invoice' %}">
+        <button class="text-center btn btn-danger">Create</button>
+    </a>
     <table class="table table-striped table-bordered">
         <thead>
             <th>Number</th>
@@ -10,7 +12,7 @@
         <tbody>
     {% for invoice in object_list %}
         <tr>
-            <td><a href="/invoices/{{invoice.id}}">{{invoice.number}}</a></td>
+            <td><a href="{% url 'invoice_detail' pk=invoice.pk %}">{{invoice.number}}</a></td>
             <td>{{invoice.subtotal}}</td>
         </tr>
     {% endfor %}
