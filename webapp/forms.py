@@ -5,7 +5,7 @@ from .models import Invoice, Product, Partner, InvoiceLine
 
 InvoiceLineFormSet = inlineformset_factory(
     Invoice, InvoiceLine, can_delete=True, fields=[
-        'product_id', 'quantity', 'description'], exclude=[
+        'product_id', 'quantity', 'description', 'tax_id'], exclude=[
         'created_at'
     ])
 

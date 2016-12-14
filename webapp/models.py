@@ -108,8 +108,7 @@ class InvoiceLine(models.Model):
     invoice_id = models.ForeignKey(
         'Invoice', default=1, on_delete=models.CASCADE)
     product_id = models.ForeignKey(
-        'Product', blank=True, null=True,
-        default=False, on_delete=models.CASCADE)
+        'Product', default=False, on_delete=models.CASCADE)
     tax_id = models.ForeignKey(
         'Tax', blank=True, null=True, on_delete=models.CASCADE)
 
