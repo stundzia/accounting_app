@@ -83,6 +83,7 @@ class Invoice(models.Model):
 
     @property
     def tax_amount(self):
+        """Return total tax amount."""
         total = 0
         for line in self.invoiceline_set.all():
             total += line.tax_amount
@@ -90,6 +91,7 @@ class Invoice(models.Model):
 
     @property
     def subtotal(self):
+        """Return invoice total (without tax)."""
         total = 0.0
         for line in self.invoiceline_set.all():
             total += line.subtotal
@@ -101,6 +103,7 @@ class Invoice(models.Model):
 
     def __unicode__(self):
         return self.number
+
 
 class InvoiceLine(models.Model):
     quantity = models.IntegerField(default=1)
@@ -137,6 +140,7 @@ class InvoiceLine(models.Model):
     def __unicode__(self):
         return "%s %s X %s" % (
             self.product_id.name or None, self.description, self.quantity)
+
 
 class Product(models.Model):
     types = [
