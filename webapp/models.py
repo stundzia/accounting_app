@@ -51,7 +51,7 @@ class Address(models.Model):
     email = models.EmailField(blank=True)
 
     def __unicode__(self):
-         return "%s [%s] %s" % (
+        return "%s [%s] %s" % (
              self.partner_id.name or None, self.type or None, self.name or None)
 
 
@@ -61,6 +61,7 @@ class Currency(models.Model):
 
     def __unicode__(self):
         return self.code
+
 
 class Company(Partner):
     employee_count = models.IntegerField(default=1)
@@ -143,6 +144,7 @@ class InvoiceLine(models.Model):
 
 
 class Product(models.Model):
+    """Product model."""
     types = [
         ('product', 'Product'),
         ('service', 'Service')
@@ -159,6 +161,7 @@ class Product(models.Model):
 
 
 class Tax(models.Model):
+    """Tax model that allows creating and later applying various taxes."""
     types = [
         ('flat', 'Flat Rate'),
         ('percent', 'Percentage')
