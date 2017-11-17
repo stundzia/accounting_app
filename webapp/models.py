@@ -51,7 +51,7 @@ class Address(models.Model):
     email = models.EmailField(blank=True)
 
     def __unicode__(self):
-         return "%s [%s] %s" % (
+        return "%s [%s] %s" % (
              self.partner_id.name or None, self.type or None, self.name or None)
 
 
@@ -61,6 +61,7 @@ class Currency(models.Model):
 
     def __unicode__(self):
         return self.code
+
 
 class Company(Partner):
     employee_count = models.IntegerField(default=1)
@@ -83,6 +84,7 @@ class Invoice(models.Model):
 
     @property
     def tax_amount(self):
+        """Return total tax amount."""
         total = 0
         for line in self.invoiceline_set.all():
             total += line.tax_amount
@@ -90,6 +92,7 @@ class Invoice(models.Model):
 
     @property
     def subtotal(self):
+        """Return invoice total (without tax)."""
         total = 0.0
         for line in self.invoiceline_set.all():
             total += line.subtotal
@@ -101,6 +104,7 @@ class Invoice(models.Model):
 
     def __unicode__(self):
         return self.number
+
 
 class InvoiceLine(models.Model):
     quantity = models.IntegerField(default=1)
@@ -138,7 +142,9 @@ class InvoiceLine(models.Model):
         return "%s %s X %s" % (
             self.product_id.name or None, self.description, self.quantity)
 
+
 class Product(models.Model):
+    """Product model."""
     types = [
         ('product', 'Product'),
         ('service', 'Service')
@@ -155,6 +161,7 @@ class Product(models.Model):
 
 
 class Tax(models.Model):
+    """Tax model that allows creating and later applying various taxes."""
     types = [
         ('flat', 'Flat Rate'),
         ('percent', 'Percentage')
